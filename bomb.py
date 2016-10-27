@@ -6,8 +6,8 @@ import requests
 import json
 import sys
 import random
-import re
-
+#import re
+#import tweepy
 CK = '' #Consumer Key	
 CS = ''#Consumer Secret
 AT = '' # Access Token
@@ -15,7 +15,7 @@ AS = ''# Accesss Token Secert
 
 url = "https://api.twitter.com/1.1/search/tweets.json?"
 urlpost = "https://api.twitter.com/1.1/statuses/update.json"
-urlfav = "https://api.twitter.com/1.1/favorites/create.json"
+#urlfav = "https://api.twitter.com/1.1/favorites/create.json"
 params ={"q":"爆発しろ -RT -filter:replies","result_type": "recent","count":100}
 twitter = OAuth1Session(CK, CS, AT, AS)
 responce = twitter.get(url, params = params)
@@ -41,7 +41,8 @@ if responce.status_code == 200:
  data=data.rstrip(",")
  ANS=data.split(",")
  TWEET=ANS[random.randint(0,len(ANS)-1)]
- RE=re.sub("/爆発しろ.*$/","が爆発しました",TWEET)
+ #RE=re.sub("/爆発しろ.*$/","が爆発しました",TWEET) Bug
+ RE=TWEET.replace("爆発しろ","が爆発しました")
  postparams={"status":RE}
- ZZZ=twitter.post(urlpost, params = postparams)
- FAV=twitter.post(urlfav, id = favid)
+ =twitter.post(urlpost, params = postparams)
+ # FAV=twitter.post(urlfav, params = favparams)
