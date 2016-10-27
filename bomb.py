@@ -13,7 +13,7 @@ AS = ''# Accesss Token Secert
 
 url = "https://api.twitter.com/1.1/search/tweets.json?"
 urlpost = "https://api.twitter.com/1.1/statuses/update.json"
-params ={"q":"爆発しろ exclude:retweets","result_type": "recent","count":100}
+params ={"q":"爆発しろ -RT -filter:replies","result_type": "recent","count":100}
 twitter = OAuth1Session(CK, CS, AT, AS)
 responce = twitter.get(url, params = params)
 loop =0
@@ -37,7 +37,6 @@ if responce.status_code == 200:
  data=data.rstrip(",")
  ANS=data.split(",")
  TWEET=ANS[random.randint(0,len(ANS)-1)]
- RE=TWEET.replace("爆発しろ","が爆発しました")
+ RE=re.sub("/爆発しろ.*$/","が爆発しました",TWEET)
  postparams={"status":RE}
  ZZZ=twitter.post(urlpost, params = postparams)
- if
