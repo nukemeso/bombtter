@@ -19,11 +19,13 @@ favurl = "https://api.twitter.com/1.1/favorites/create.json"
 params ={"q":"爆発しろ exclude:retweets","result_type": "recent","count":100}
 twitter = OAuth1Session(CK, CS, AT, AS) #認証
 responce = twitter.get(url, params = params)#爆発しろを含むツイートを100検索
+namelist=""#この中にツイート主の@抜きIDを保存
 idlist=""#この中にツイートIDを入れていきます。
 data=""#この中にツイート本文を入れていきます。
 if responce.status_code == 200:
  SEARCH=json.loads(responce.text)
  for a in SEARCH["statuses"]:
+   scrname = a["user"]["screen_name"]#ツイート主の判定
    via=a["source"] #viaの判定
    favid=a["id"]#ツイートIDの取得
    H=a["text"]#ツイート本文の取得
@@ -35,25 +37,34 @@ if responce.status_code == 200:
       try:
        data+=H+","
        idlist+=str(favid)+","
+       namelist+=scrname+","#リストの中に入れていきます。
        if("cranky" in H)or("Cranky" in H)or("コナミ社長" in H)or("KONAMI社長" in H):
         #crankyとKONAMI社長は確率UP
         data+=H+","
         idlist+=str(favid)+","
+        namelist+=scrname+","
       except UnicodeEncodeError:
        pass
+ #↓ツイートIDと本文をリスト化します。
  idlist=idlist.rstrip(",")
  ID=idlist.split(",")
- #↓ツイートIDと本文をリスト化します。
  data=data.rstrip(",")
  ANS=data.split(",")
+ namelist=namelist.rstrip(",")
+ IDs=namelist.split(",")
 #ツイートの取得はここまで
  
 if not(ANS[0]==""):
  AAAA=random.randint(0,len(ANS)-1)
+ SCRNAME=IDs[AAAA]
  TWEET=ANS[AAAA]
- FAVID=ID[AAAA]#リストとして拾ったツイートの中からランダムで
+ FAVID=ID[AAAA]#リストとして拾ったツイートの中からランダムで選びます
  if("めかろいど爆発しろ" in TWEET):#ぼむったーっぽく自爆してもらいます
   RE=TWEET.replace("爆発しろ","が自爆しました")
+ elif("から爆発しろ" in TWEET):#～(だ)から爆発しろを自然に爆発させます。
+  RE=TWEET.replace("爆発しろ","爆発しました")
+ elif("俺爆発しろ" in TWEET):#俺爆発しろとか言ってるやつのIDを抜き出してみます。
+  RE=TWEET.replace("俺爆発しろ",SCRNAME+"が爆発しました")
  else:
   RE=TWEET.replace("爆発しろ","が爆発しました")
 elif(ANS[0]==""):#ツイートが引っかからなかったらおとなしく自爆してもらいます。
