@@ -12,12 +12,6 @@ CK = '' #Consumer Key
 CS = '' # Consumer Secret
 AT = '' # Access Token
 AS = ''# Accesss Token Secert
-
-CK = 'JwuvR50gm2WTwT3Lp5KkAMj85' #Consumer Key	
-CS = 'dDNEAcqDOvYGa8ujBJfhnoDbF2TpFrnN5ijJ92gKODtQVvjdIi' # Consumer Secret
-AT = '815236832-vxFnjhzO1ofKhHlC0viH202pLCL5IfsSJxacLYZr' # Access Token
-AS = 'mSdeSjSHKnbYrhDI0bSmaB7gcPy1CbeFnC7r5VhKn55Ea'# Accesss Token Secert
-
  
 url = "https://api.twitter.com/1.1/search/tweets.json?"
 urlpost = "https://api.twitter.com/1.1/statuses/update.json"
