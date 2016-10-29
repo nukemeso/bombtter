@@ -6,12 +6,11 @@ import requests
 import json
 import sys
 import random
-
-
-CK = '' #Consumer Key	
-CS = '' # Consumer Secret
-AT = '' # Access Token
-AS = ''# Accesss Token Secert
+import setting 
+CK=setting.CK
+CS=setting.CS
+AT=setting.AT
+AS=setting.AS
  
 url = "https://api.twitter.com/1.1/search/tweets.json?"
 urlpost = "https://api.twitter.com/1.1/statuses/update.json"
