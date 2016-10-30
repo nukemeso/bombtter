@@ -20,6 +20,7 @@ twitter = OAuth1Session(CK, CS, AT, AS) #認証
 responce = twitter.get(url, params = params)#爆発しろを含むツイートを100検索
 idlist=""#この中にツイートIDを入れていきます。
 data=""#この中にツイート本文を入れていきます。
+FA="false"
 if responce.status_code == 200:
  SEARCH=json.loads(responce.text)
  for a in SEARCH["statuses"]:
@@ -54,9 +55,13 @@ while(m<3):
   FAVID=ID[AAAA]#リストとして拾ったツイートの中からランダムで選びます
   if("めかろいど爆発しろ" in TWEET):#ぼむったーっぽく自爆してもらいます
    RE=TWEET.replace("爆発しろ","が自爆しました")
+  elif("から爆発しろ" in TWEET):
+   RE=TWEET.replace("爆発しろ","爆発しました")#～から爆発しろに対応
+  elif("くりいむろいど爆発しろ" in TWEET):
+   RE=TWEET.replace("爆発しろ","大爆発しました")#くりいむを大爆発
   else:
    RE=TWEET.replace("爆発しろ","が爆発しました")
- elif(ANS[0]==""):#ツイートが引っかからなかったらおとなしく自爆してもらいます。
+ else:#ツイートが引っかからなかったらおとなしく自爆してもらいます。
   self=["爆発させるものがないから代わりにめかろいどが自爆しました","爆発させるものがないから代わりに開発者のくりいむろいどが爆発しました"]
   RE=self[random.randint(0,1)]
  #ここから投稿していきます
@@ -64,7 +69,19 @@ while(m<3):
  ZZZ=twitter.post(urlpost, params = postparams)#投稿
  favparams={"id":int(FAVID)}
  FAVEXE=twitter.post(favurl,params=favparams)#元ツイをふぁぼ
- if (ZZZ.status_code == 200):
+ if (ZZZ.status_code == 200):#最大で三回リトライします。
   m=3
+  FA="true"
  else:
   m+=1
+ print(FA)
+  
+if(FA=="false"):#三回リトライしてもダメなとき、自爆します
+ RAN1=random.randint(1,200)
+ RAN2=random.randint(1,200)
+ if(RAN1==RAN2):
+  RE="チンポ(ﾎﾞﾛﾝ"#0.5%の確率で性器を露出します。よっぽどのことがない限り起きない
+ else:
+  RE="同じツイートばっかり拾おうとするからめかろいどが爆発しました"
+ postparams={"status":RE}
+ ZZZ=twitter.post(urlpost, params = postparams)#投稿
