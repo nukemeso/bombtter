@@ -63,7 +63,7 @@ while(m<3):
    RE=TWEET.replace("爆発しろ","爆発しました")#～から爆発しろに対応
    bombed="true"
   elif("くりいむろいど爆発しろ" in TWEET):
-   RE=TWEET.replace("爆発しろ","大爆発しました")#くりいむを大爆発
+   RE=TWEET.replace("爆発しろ","が大爆発しました")#くりいむを大爆発
    bombed="true"
   else:
    RE=TWEET.replace("爆発しろ","が爆発しました")
@@ -74,27 +74,27 @@ while(m<3):
  #ここから投稿していきます
  postparams={"status":RE}
  ZZZ=twitter.post(urlpost, params = postparams)#投稿
- favparams={"id":int(FAVID)}
- FAVEXE=twitter.post(favurl,params=favparams)#元ツイをふぁぼ
  if (ZZZ.status_code == 200):#最大で三回リトライします。
+  favparams={"id":int(FAVID)}
+  FAVEXE=twitter.post(favurl,params=favparams)#元ツイをふぁぼ
   m=3
   FA="true"
  else:
   m+=1
-  
 if(FA=="false"):#三回リトライしてもダメなとき、自爆します
  RAN1=random.randint(1,200)
  RAN2=random.randint(1,200)
  if(RAN1==RAN2):
   RE="チンポ(ﾎﾞﾛﾝ"#0.5%の確率で性器を露出します。よっぽどのことがない限り起きない
  else:
-  RE="同じツイートばっかり拾おうとするからめかろいどが爆発しました"
+  TWIFAILED=["同じツイートばっかり拾おうとするからめかろいどが自爆しました","同じツイートばっかり拾おうとするから開発者のくりいむろいどが爆発しました"]
+  RE=TWIFAILED[random.randint(0,1)]
  postparams={"status":RE}
  ZZZ=twitter.post(urlpost, params = postparams)#投稿
 
 #ここから下はログの出力。消しても動きます
 if(bombed=="true")and(FA=="true"):
  TIMEs=datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S")
- with open("explotion.txt",mode="a",encoding="utf-8") as EX:
+ with open("explotion.log",mode="a",encoding="utf-8") as EX:
   EX.write(str(TIMEs)+":"+RE+"\n")#時間と一緒にツイートを出力するです
   EX.close()
