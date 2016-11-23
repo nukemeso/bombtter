@@ -16,7 +16,7 @@ excludes=setting.excludes
 url = "https://api.twitter.com/1.1/search/tweets.json?"
 urlpost = "https://api.twitter.com/1.1/statuses/update.json"
 favurl = "https://api.twitter.com/1.1/favorites/create.json"
-params ={"q":"爆発しろ exclude:retweets -filter:images -filter:videos -filter:links "+excludes,"result_type": "recent","count":100}
+params ={"q":"爆発しろ exclude:retweets -http -filter:images -filter:videos -filter:links "+excludes,"result_type": "recent","count":100}
 twitter = OAuth1Session(CK, CS, AT, AS) #認証
 responce = twitter.get(url, params = params)#爆発しろを含むツイートを100検索
 idlist=""#この中にツイートIDを入れていきます。
@@ -33,7 +33,7 @@ if responce.status_code == 200:
    B=int(a["text"].find("爆発しろ"))
    A=int(len(a["text"]))
    if(A-B-4==0):#ツイートの長さとかを測定して後方一致のツイートを絞る
-     if not(("定期" in H)or("\n" in H)or(".@" in H)or("@" in H) or("#" in H)) and (A<=80)and(A>8) and not(("bot" in via) or ("twirobo" in via) or("auto" in via) or("地震" in via)or("BOT" in via)or("定期" in via)or("IFTTT" in via))and not(reply==""):
+     if not(("定期" in H)or("\n" in H)or(".@" in H)or("@" in H) or("#" in H)) and (A<=80)and(A>8) and not(("bot" in via) or ("twirobo" in via) or("auto" in via) or("地震" in via)or("BOT" in via)or("定期" in via)or("IFTTT" in via))and [not(reply=="")] and (a["entities"]["urls"]==[]):
       #9～80文字でリプライ、ハッシュタグ、改行、画像がない、且つbotで無いと思われるツイートを取得
       try:
        idlist+=favid+","
@@ -81,14 +81,15 @@ while(m<3):
   FA="true"
  else:
   m+=1
+  
 if(FA=="false"):#三回リトライしてもダメなとき、自爆します
- RAN1=random.randint(1,200)
- RAN2=random.randint(1,200)
+ RAN1=random.randint(1,1000)
+ RAN2=random.randint(1,1000)
  if(RAN1==RAN2):
-  RE="チンポ(ﾎﾞﾛﾝ"#0.5%の確率で性器を露出します。よっぽどのことがない限り起きない
+  RE="チンポ(ﾎﾞﾛﾝ"#0.1%の確率で性器を露出します。よっぽどのことがない限り起きない
  else:
-  TWIFAILED=["同じツイートばっかり拾おうとするからめかろいどが自爆しました","同じツイートばっかり拾おうとするから開発者のくりいむろいどが爆発しました"]
-  RE=TWIFAILED[random.randint(0,1)]
+  KKK=["同じツイートばっかり拾おうとするからめかろいどが自爆しました","同じツイートばっかり拾おうとするから開発者のくりいむろいどが爆発しました"]
+  RE=KKK[random.randint(0,1)]
  postparams={"status":RE}
  ZZZ=twitter.post(urlpost, params = postparams)#投稿
 
