@@ -23,7 +23,7 @@ def PRIME(S):
     prime=False
     break
   else:
-   if(S=="0"or"1"):
+   if(S==0 or S==1):
     return(0)
  if(prime==True):
   return(1)

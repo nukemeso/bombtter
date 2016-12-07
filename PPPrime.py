@@ -25,13 +25,14 @@ for line in r.iter_lines():
  A=line.decode("utf-8")
  try:
   S=json.loads(A)
-  if(S["in_reply_to_user_id"]==MYID)and("-prime"in S["text"]):
+  if("-prime"in S["text"]):
    RES=S["text"].lstrip("@"+MYSCRNAME)
    RES=RES.lstrip(" -prime")
    A=int(RES)
    ID=S["user"]["screen_name"]
    RE="@"+ID+" " #リプから数字を抽出
    T=PCH.PRIME(A)
+   print(T)
    if(T==1):
     RE+=str(A)+"は素数です"
    elif(T==-1 or T==-2):
